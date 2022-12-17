@@ -1,5 +1,5 @@
-FROM alpine
-MAINTAINER David Personette <dperson@gmail.com>
+FROM alpine:3.15.4
+MAINTAINER Everton Taques <everton.taques@gmail.com>
 
 # Install openvpn
 RUN apk --no-cache --no-progress upgrade && \
@@ -10,8 +10,8 @@ RUN apk --no-cache --no-progress upgrade && \
 
 COPY openvpn.sh /usr/bin/
 
-HEALTHCHECK --interval=60s --timeout=15s --start-period=120s \
-             CMD curl -LSs 'https://api.ipify.org'
+HEALTHCHECK --interval=60s --timeout=5s --start-period=30s \
+             CMD curl --fail http://192.168.200.1 || kill 1
 
 VOLUME ["/vpn"]
 
